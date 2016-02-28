@@ -1,0 +1,21 @@
+consul:
+  image: progrium/consul
+  hostname: node1
+  ports:
+   - "8400:8400"
+   - "8500:8500"
+   - "8600:8600/udp"
+   - "53:53"
+  command: "-server -bootstrap -ui-dir /ui"
+hello:
+  build: ./hello
+  links:
+   - consul
+  ports:
+    - "8080"
+world:
+  build: ./world
+  links:
+   - consul
+  ports:
+    - "8080"
